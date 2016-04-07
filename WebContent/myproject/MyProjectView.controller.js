@@ -204,6 +204,7 @@ function(MessageBox, Controller, JSONModel){
 		
 		checkBoxState : function(e){
 			
+			
 			// e este un event bind-uit de proprietatea select
 			//ne da informatii despre obiectul selectat.
 			//console.log(e.getSource().getBindingContext().getObject());
