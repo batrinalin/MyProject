@@ -1,0 +1,181 @@
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" controllerName="myproject.MyProjectView" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:l="sap.ui.layout">
+	<Page title="{/pageTitle}">
+		<content>
+			<l:Grid class="sapUiSmallMarginTop">
+
+				<Panel id = "addPanel" visible ="{addSection>/showAddSectionState}">
+					<layoutData>
+						<l:GridData span="L2 M6 S12" />
+					</layoutData>
+					<content items ="addSection>" >
+
+						<Toolbar>
+							<Title text="Add employee section" level="H2" />
+						</Toolbar>
+						
+						<Input  value="{addSection>/newEmployee/name}" id="name" placeholder="Enter new name">
+							<layoutData>
+								<l:GridData span="L3 M6 S12" />
+							</layoutData>
+						</Input>
+
+						<Input value="{addSection>/newEmployee/firstName}" id="firstName" placeholder="Enter new firstName">
+							<layoutData>
+								<l:GridData span="L3 M6 S12" />
+							</layoutData>
+						</Input>
+
+						<Input value="{addSection>/newEmployee/bornDate}" id="bornDate" placeholder="Enter new bornDate">
+							<layoutData>
+								<l:GridData span="L3 M6 S12" />
+							</layoutData>
+						</Input>
+
+						<Input value="{addSection>/newEmployee/employeeDate}" id="employeeDate" placeholder="Enter new employeeDate">
+							<layoutData>
+								<l:GridData span="L3 M6 S12" />
+							</layoutData>
+						</Input>
+
+						<Input value="{addSection>/newEmployee/jobName}" id="jobName" placeholder="Enter new jobName">
+							<layoutData>
+								<l:GridData span="L3 M6 S12" />
+							</layoutData>
+						</Input>
+
+						<Input value="{addSection>/newEmployee/managerId}" id="managerId" placeholder="Enter managerId">
+							<layoutData>
+								<l:GridData span="L6 M6 S12" />
+							</layoutData>
+						</Input>
+
+						<ComboBox value="{addSection>/newEmployee/brm}" id = "brm" items="{/brmArray}">
+							<items>
+								<core:Item key="{key}" text="{text}" />
+							</items>
+						</ComboBox>
+
+						<Button text="Insert Employee" press="addNewEmployee">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>
+						</Button>
+						
+						<Button text="Edit Employee" press="editEmployee">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>
+						</Button>
+						
+						<Button text="Reset" press="resetAddSectionLabels">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>
+						</Button>
+						
+						<Button text="Cancel" press="showHideAddSection">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>
+						</Button>
+
+					</content>
+				</Panel>
+
+				<Table id="employeeTable" items="{/employeeArray}">
+					<layoutData>
+						<l:GridData span="L6 M6 S12" />
+					</layoutData>
+					<headerToolbar>
+						<Toolbar>
+							<Title text="EmployeeTable" level="H6" />
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						
+						<Column>
+							<Text text="Selected" />
+						</Column>
+						<Column>
+							<Text text="ID" />
+						</Column>
+						<Column>
+							<Text text="Prenume" />
+						</Column>
+						<Column>
+							<Text text="Nume" />
+						</Column>
+						<Column>
+							<Text text="Data nasterii" />
+						</Column>
+						<Column>
+							<Text text="Data angajarii" />
+						</Column>
+						<Column>
+							<Text text="Salariu" />
+						</Column>
+						<Column>
+							<Text text="Functia" />
+						</Column>
+						<Column>
+							<Text text="Manager's ID" />
+						</Column>
+						<Column>
+							<Text text="Incadrare" />
+						</Column>
+						<Column>
+							<Text text="Is manager" />
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<cells>
+						
+								<CheckBox select="checkBoxState" selected="{checked}" />
+								<ObjectIdentifier title="{id}" text="{nume}" />
+								<Text text="{firstName}" />
+								<Text text="{name}" />
+								<Text text="{bornDate}" />
+								<Text text="{employeeDate}" />
+								<Text text="{pay}" />
+								<Text text="{jobName}" />
+								<Text text="{managerId}" />
+								<Text text="{brm}" />
+
+							</cells>
+						</ColumnListItem>
+					</items>
+				</Table>
+				
+				<Button text="AddEmployee" press="showHideAddSection">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>
+				</Button>
+				<Button text="Delete" press="deleteCheck" >
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>
+				</Button>
+				
+				<Button text="Edit" press="editEmployeeSection" 
+						enabled ="{
+							path : '/employeeArray',
+							formatter : '.checkStatus'
+						}">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>
+				</Button>
+				
+				<Button	text="DeletewConfirmation" press="confirmDelete">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>	
+				</Button>
+			</l:Grid>
+		</content>
+	</Page>
+</core:View>
