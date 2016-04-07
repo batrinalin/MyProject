@@ -203,10 +203,7 @@ function(MessageBox, Controller, JSONModel){
 		},
 		
 		checkBoxState : function(e){
-<<<<<<< HEAD
-=======
 			
->>>>>>> parent of bccb137... Revert "Do commit"
 			// e este un event bind-uit de proprietatea select
 			//ne da informatii despre obiectul selectat.
 			//console.log(e.getSource().getBindingContext().getObject());
