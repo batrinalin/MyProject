@@ -1,0 +1,21 @@
+/*
+	var obj = {
+		value : 42
+	};
+	
+	function f(a, b, c) {
+		return this.value + a + b + c;
+	}
+	
+	var a = f(); //42;
+	var b = f.call(obj, 1, 2 ,3) //42
+	
+	var args = [];
+	
+	
+	var c =  f.apply(obj, args)//42
+	
+	var f2 = f.bind(obj);
+	//diferenta call si apply, la apply pot sa imi constuiesc eu array-ul de parametrii
+	//bind pot sa selectez eu care ii this.ul care vreau sa imi apeleze functia
+	 */
