@@ -125,9 +125,6 @@
 						<Column>
 							<Text text="Incadrare" />
 						</Column>
-						<Column>
-							<Text text="Is manager" />
-						</Column>
 					</columns>
 					<items>
 						<ColumnListItem>

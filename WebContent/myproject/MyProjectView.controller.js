@@ -12,6 +12,8 @@ function(MessageBox, Controller, JSONModel) {
 		 * initialization.
 		 * 
 		 * @memberOf myproject.MyProjectView
+		 * 
+		 * Push with the git GUI by Alin-Calin
 		 */
 		onInit : function() {
 
