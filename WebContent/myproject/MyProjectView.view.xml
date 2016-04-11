@@ -57,25 +57,25 @@
 							</items>
 						</ComboBox>
 
-						<Button text="Insert Employee" press="addNewEmployee">
+						<Button text="Insert Employee" press="addNewEmployeeAddSectionButton" visible ="{addSection>/insertButtonState}">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
 						</Button>
 						
-						<Button text="Edit Employee" press="editEmployee">
+						<Button text="Edit Employee" press="editEmployeeAddSectionButton" visible ="{addSection>/editButtonState}">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
 						</Button>
 						
-						<Button text="Reset" press="resetAddSectionLabels">
+						<Button text="Reset" press="resetAddSectionModel">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
 						</Button>
 						
-						<Button text="Cancel" press="showHideAddSection">
+						<Button text="Cancel" press="cancelButtonAddSection">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
@@ -148,18 +148,12 @@
 						</ColumnListItem>
 					</items>
 				</Table>
-				
-				<Button text="AddEmployee" press="showHideAddSection">
+				<Button text="AddEmployee" press="addEmployeeButton">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
 				</Button>
-				<Button text="Delete" press="deleteCheck" >
-							<layoutData>
-								<l:GridData span="L3 M3 S6" />
-							</layoutData>
-				</Button>
-				
+								
 				<Button text="Edit" press="editEmployeeSection" 
 						enabled ="{
 							path : '/employeeArray',
@@ -170,7 +164,7 @@
 							</layoutData>
 				</Button>
 				
-				<Button	text="DeletewConfirmation" press="confirmDelete">
+				<Button	text="Delete" press="confirmDelete">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>	
