@@ -12,9 +12,7 @@ function(MessageBox, Controller, JSONModel) {
 		 * initialization.
 		 * 
 		 * @memberOf myproject.MyProjectView
-		 * 
 		 * Push with the git GUI by Alin-Calin
-		 * Elim
 		 */
 		onInit : function() {
 
@@ -347,9 +345,9 @@ function(MessageBox, Controller, JSONModel) {
 
 			this.resetAddSectionModel();
 
-			if (addSectionState === false) {
+			//if (addSectionState === false) {
 				this.showHideAddSection();
-			}
+			//}
 
 			noEditButton = false;
 			insertButton = true;
