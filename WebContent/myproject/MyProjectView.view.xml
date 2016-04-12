@@ -119,6 +119,7 @@
 						<Column>
 							<Text text="Functia" />
 						</Column>
+						
 						<Column>
 							<Text text="Manager's ID" />
 						</Column>
@@ -162,6 +163,11 @@
 				</Button>
 				
 				<Button	text="Delete" press="confirmDelete">
+							<layoutData>
+								<l:GridData span="L3 M3 S6" />
+							</layoutData>	
+				</Button>
+				<Button	text="Upload" press="uploadJson" visible="false" >
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>	

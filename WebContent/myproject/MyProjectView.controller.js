@@ -11,8 +11,7 @@ function(MessageBox, Controller, JSONModel) {
 		 * it is displayed, to bind event handlers and do other one-time
 		 * initialization.
 		 * 
-		 * @memberOf myproject.MyProjectView
-		 * Push with the git GUI by Alin-Calin
+		 * @memberOf myproject.MyProjectView Push with the git GUI by Alin-Calin
 		 */
 		onInit : function() {
 
@@ -34,6 +33,14 @@ function(MessageBox, Controller, JSONModel) {
 
 			});
 
+			this.oModel = new sap.ui.model.json.JSONModel({
+
+				e1 : {
+					name : "Caius",
+					prenume : "Matei"
+				}
+			});
+
 			this.modelEmployee = new JSONModel({
 
 				pageTitle : "Titlul pagini web",
@@ -50,7 +57,7 @@ function(MessageBox, Controller, JSONModel) {
 				} ],
 
 				employeeArray : [ {
-					id : "101",
+					id : "001",
 					name : "Popescu",
 					firstName : "Ioan",
 					bornDate : "10-08-1990",
@@ -72,7 +79,7 @@ function(MessageBox, Controller, JSONModel) {
 					pay : "7240",
 					checked : false
 				}, {
-					id : "0123",
+					id : "120",
 					name : "Bulc",
 					firstName : "Sergiu",
 					bornDate : "10-08-1982",
@@ -86,12 +93,15 @@ function(MessageBox, Controller, JSONModel) {
 			});
 
 			this.getView().setModel(this.modelEmployee) // first model added to
-			// View
+			// View model added to View
 			this.getView().setModel(this.addSectionModel, "addSection") // second
-			// model
-			// added
-			// to
-			// View
+			this.getView().setModel(this.oModel, "oModelData") // third
+		},
+
+		uploadJson : function() {
+
+			var data = this.oModel;
+			data.loadData("data.json");
 		},
 
 		uniqueID : function() {
@@ -189,7 +199,8 @@ function(MessageBox, Controller, JSONModel) {
 					.getProperty("/showAddSectionState");
 
 			if (addSectionState === true) {
-				//Daca este addSection state pe true il inchid is il pun pe false.
+				// Daca este addSection state pe true il inchid is il pun pe
+				// false.
 				this.showHideAddSection();
 				addSectionState = false;
 				this.resetAddSectionModel();
@@ -304,13 +315,12 @@ function(MessageBox, Controller, JSONModel) {
 
 		// todo: fa check sa se disable daca se check-uie 2
 
-		/*checkSelectBox : function(checked) {
-			this.modelEmployee.refresh(true);
-			if (checked == true)
-
-				return true;
-			return false;
-		},*/
+		/*
+		 * checkSelectBox : function(checked) {
+		 * this.modelEmployee.refresh(true); if (checked == true)
+		 * 
+		 * return true; return false; },
+		 */
 
 		checkStatus : function(employeeArray) {
 
@@ -333,7 +343,7 @@ function(MessageBox, Controller, JSONModel) {
 			return true;
 		},
 
-		//este vorba de butonul din afara AddSection
+		// este vorba de butonul din afara AddSection
 		addEmployeeButton : function() {
 
 			var addSectionState = this.addSectionModel
@@ -345,9 +355,9 @@ function(MessageBox, Controller, JSONModel) {
 
 			this.resetAddSectionModel();
 
-			//if (addSectionState === false) {
-				this.showHideAddSection();
-			//}
+			// if (addSectionState === false) {
+			this.showHideAddSection();
+			// }
 
 			noEditButton = false;
 			insertButton = true;
@@ -357,6 +367,31 @@ function(MessageBox, Controller, JSONModel) {
 					.setProperty("/insertButtonState", insertButton);
 			this.addSectionModel.refresh();
 		},
+
+		validateEmployee : function(employee) {
+
+			var employeeValidator = true;
+
+			if (employee.name === "" || employee.firstName=== "" || employee.bornDate=== ""
+				|| employee.employeeDate === "" ||employee.managerId === "" 
+				|| employee.brm === "" || employee.jobName === ""|| employee.pay === "" ) {
+				
+					employeeValidator = false;
+			}
+			/*
+			 * id : "001",
+					name : "Popescu",
+					firstName : "Ioan",
+					bornDate : "10-08-1990",
+					employeeDate : "22-09-2005",
+					managerId : "007",
+					brm : "Full-Time",
+					jobName : "Portar",
+					pay : "3450",
+					checked : false*/
+			return employeeValidator;
+		},
+
 		// Functia addNewEmployee adauga in array-ul de employee noul angajat.
 		addNewEmployeeAddSectionButton : function(event) {
 
@@ -374,10 +409,10 @@ function(MessageBox, Controller, JSONModel) {
 					.getProperty("/newEmployee/managerId");
 			var brm = this.addSectionModel.getProperty("/newEmployee/brm");
 			var pay = this.calculatePay(brm);
-
+			var newEmployee;
 			var employees = this.modelEmployee.getProperty("/employeeArray");
 
-			employees.push({
+			newEmployee = {
 				id : id,
 				name : name,
 				firstName : firstName,
@@ -388,22 +423,21 @@ function(MessageBox, Controller, JSONModel) {
 				jobName : jobName,
 				pay : pay,
 				checked : false
-			});
+			};
 
-			var newEmployee = {
-				name : "",
-				firstName : "",
-				bornDate : "",
-				employeeDate : "",
-				jobName : "",
-				managerId : "",
-				brm : ""
+			var employeeValidator = this.validateEmployee(newEmployee);
+
+			if (employeeValidator) {
+				employees.push(newEmployee);
+
+				this.addSectionModel.setProperty("/newEmployee", {});
+				this.modelEmployee.setProperty("/employeeArray", employees);
+				this.modelEmployee.refresh(true);
+				this.addSectionModel.refresh(true);
 			}
-
-			this.addSectionModel.setProperty("/newEmployee", newEmployee);
-			this.modelEmployee.setProperty("/employeeArray", employees);
-			this.modelEmployee.refresh(true);
-			this.addSectionModel.refresh(true);
+			else {
+				console.log("Angajatul nu e valid")
+			}
 		}
 
 	});
