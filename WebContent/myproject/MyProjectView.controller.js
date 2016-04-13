@@ -371,14 +371,25 @@ function(MessageBox, Controller, JSONModel) {
 		validateEmployee : function(employee) {
 
 			var employeeValidator = true;
+			var myString = [ '', '*' ];
 
-			if (employee.name === "" || employee.firstName=== "" || employee.bornDate=== ""
-				|| employee.employeeDate === "" ||employee.managerId === "" 
-				|| employee.brm === "" || employee.jobName === ""|| employee.pay === "" ) {
-				
-					employeeValidator = false;
+			for (var i = 0; i < myString.length; i++) {
+				//Do something
+				console.log(myString[i]);
+				if (myString.indexOf(myString[i]) != -1) {
+					
+					employeeValidator =false;
+				}
 			}
-			var myString = 'sdad*dsadsa';
+
+			if (employee.name === "" || employee.firstName === ""
+					|| employee.bornDate === "" || employee.employeeDate === ""
+					|| employee.managerId === "" || employee.brm === ""
+					|| employee.jobName === "" || employee.pay === "") {
+
+				employeeValidator = false;
+			}
+
 			/*
 			 * TODO:
 			 * -gandeste-te la validari de string-uri pentru
@@ -395,11 +406,7 @@ function(MessageBox, Controller, JSONModel) {
 					jobName : "Portar",
 					pay : "3450",
 					checked : false*/
-			
-			
-			if(myString.indexOf('*') ===-1)
-			{console.log("da");}
-			
+
 			return employeeValidator;
 		},
 
@@ -445,8 +452,7 @@ function(MessageBox, Controller, JSONModel) {
 				this.modelEmployee.setProperty("/employeeArray", employees);
 				this.modelEmployee.refresh(true);
 				this.addSectionModel.refresh(true);
-			}
-			else {
+			} else {
 				console.log("Angajatul nu e valid")
 			}
 		}
