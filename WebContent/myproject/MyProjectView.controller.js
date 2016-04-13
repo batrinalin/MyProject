@@ -378,7 +378,13 @@ function(MessageBox, Controller, JSONModel) {
 				
 					employeeValidator = false;
 			}
+			var myString = 'sdad*dsadsa';
 			/*
+			 * TODO:
+			 * -gandeste-te la validari de string-uri pentru
+			 * -nume datanasterii
+			 * -Creaza o fucntie pentru calculul varstei si afisaz-o in tabel
+			 * 
 			 * id : "001",
 					name : "Popescu",
 					firstName : "Ioan",
@@ -389,6 +395,11 @@ function(MessageBox, Controller, JSONModel) {
 					jobName : "Portar",
 					pay : "3450",
 					checked : false*/
+			
+			
+			if(myString.indexOf('*') ===-1)
+			{console.log("da");}
+			
 			return employeeValidator;
 		},
 
