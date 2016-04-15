@@ -12,7 +12,7 @@
 					<content items ="addSection>" >
 
 						<Toolbar>
-							<Title text="Add employee section" level="H2" />
+							<Title text="{addSection>/labelAddSection}" level="H2" />
 						</Toolbar>
 						
 						<Input  value="{addSection>/newEmployee/name}" id="name" placeholder="Enter new name">

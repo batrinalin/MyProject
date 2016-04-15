@@ -11,7 +11,7 @@ function(MessageBox, Controller, JSONModel) {
 		 * it is displayed, to bind event handlers and do other one-time
 		 * initialization.
 		 * 
-		 * @memberOf myproject.MyProjectView Push with the git GUI by Alin-Calin
+		 * Push with the git GUI by Alin-Calin
 		 */
 		onInit : function() {
 
@@ -30,6 +30,7 @@ function(MessageBox, Controller, JSONModel) {
 				showAddSectionState : false,
 				editButtonState : false,
 				insertButtonState : false,
+				labelAddSection : "Add employee section"
 
 			});
 
@@ -355,9 +356,9 @@ function(MessageBox, Controller, JSONModel) {
 
 			this.resetAddSectionModel();
 
-			// if (addSectionState === false) {
-			this.showHideAddSection();
-			// }
+			if (addSectionState === false) {
+				this.showHideAddSection();
+			}
 
 			noEditButton = false;
 			insertButton = true;
@@ -367,47 +368,68 @@ function(MessageBox, Controller, JSONModel) {
 					.setProperty("/insertButtonState", insertButton);
 			this.addSectionModel.refresh();
 		},
+		
+		validateDate : function (date,date2){
+			
+			var message = '';
+			
+			if ( date == "Invalid Date" ) {
+				message = "bornDate invalid";
+			}
+			else if ( date2 == "Invalid Date" ) {
+				message = "employeeDate invalid";
+			}
+			return message;
+		},
 
-		validateEmployee : function(employee) {
 
-			var employeeValidator = true;
-			var myString = [ '', '*' ];
+		//validate name, firstName, jobName.
+		validateEmployeeStrings : function(employee) {
 
+			var employeeValidatorMessage = '';
+			var myString = ['*', ';', '#', '/', '!', ' ','0','1'
+			                ,'2','3','4','5','6','7','8','9' ];
+			
 			for (var i = 0; i < myString.length; i++) {
-				//Do something
-				console.log(myString[i]);
-				if (myString.indexOf(myString[i]) != -1) {
-					
-					employeeValidator =false;
+
+				var checkName = employee.name.indexOf(myString[i]);
+				var checkFirstName = employee.firstName.indexOf(myString[i]);
+				var checkJobName = employee.jobName.indexOf(myString[i]);
+				
+				if ( checkName != -1 ) {
+					employeeValidatorMessage = "";
+				}
+				else {
+					employeeValidatorMessage = false;
 				}
 			}
-
-			if (employee.name === "" || employee.firstName === ""
-					|| employee.bornDate === "" || employee.employeeDate === ""
-					|| employee.managerId === "" || employee.brm === ""
-					|| employee.jobName === "" || employee.pay === "") {
-
-				employeeValidator = false;
-			}
-
+			
+			 /*
+			  * var checkBornDate = employee.bornDate;
+				var checkEmployeeDate = employee.employeeDate;
+			
+			 
+			 
+			 if( dt == "Invalid date" || dt2 == "Invalid date"){
+				 employeeValidator = false;
+			 }
+			 else {
+				 
+				 if(dt2.getFullYear() > dt.getFullYear()){
+					 employeeValidator = false;
+				 }
+			 var anAngajare = dt.getFullYear();
+			 var vechime = anCurent - anAngajare;
+			 return vechime;
+			 }
+			 */
+			
 			/*
-			 * TODO:
-			 * -gandeste-te la validari de string-uri pentru
-			 * -nume datanasterii
-			 * -Creaza o fucntie pentru calculul varstei si afisaz-o in tabel
-			 * 
-			 * id : "001",
-					name : "Popescu",
-					firstName : "Ioan",
-					bornDate : "10-08-1990",
-					employeeDate : "22-09-2005",
-					managerId : "007",
-					brm : "Full-Time",
-					jobName : "Portar",
-					pay : "3450",
-					checked : false*/
+			 * id, name,firstName,bornDate,employeeDate,managerId,brm
+					jobName,pay,checked
+			 */
 
-			return employeeValidator;
+			return employeeValidatorMessage;
 		},
 
 		// Functia addNewEmployee adauga in array-ul de employee noul angajat.
@@ -429,7 +451,8 @@ function(MessageBox, Controller, JSONModel) {
 			var pay = this.calculatePay(brm);
 			var newEmployee;
 			var employees = this.modelEmployee.getProperty("/employeeArray");
-
+			var employeeValidator = true;
+			
 			newEmployee = {
 				id : id,
 				name : name,
@@ -442,16 +465,34 @@ function(MessageBox, Controller, JSONModel) {
 				pay : pay,
 				checked : false
 			};
+			
+			 var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
+			 var dt = new Date(bornDate.replace(pattern, '$3-$2-$1'));
+			 var dt2 = new Date(employeeDate.replace(pattern, '$3-$2-$1'));
+			 var message = this.validateDate(dt,dt2)
+			 
+			 employeeValidator = this.validateEmployeeStrings(newEmployee);
+			 
+			 if (employeeValidator != false) {
+			 
+				 if( message !='' ){
+				 
+				 MessageBox.error(message);
+				 } else {
+				 
+				 if( dt.getFullYear() > dt2.getFullYear()) {
+					 
+					 MessageBox.error("Born date is bigger then employee date");
+				 }
+			 	}
 
-			var employeeValidator = this.validateEmployee(newEmployee);
-
-			if (employeeValidator) {
 				employees.push(newEmployee);
 
 				this.addSectionModel.setProperty("/newEmployee", {});
 				this.modelEmployee.setProperty("/employeeArray", employees);
 				this.modelEmployee.refresh(true);
 				this.addSectionModel.refresh(true);
+				
 			} else {
 				console.log("Angajatul nu e valid")
 			}
