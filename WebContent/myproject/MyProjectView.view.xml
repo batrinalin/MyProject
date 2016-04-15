@@ -1,80 +1,89 @@
 <core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
 	xmlns="sap.m" controllerName="myproject.MyProjectView" xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:l="sap.ui.layout">
-	<Page title="{/pageTitle}">
+	<Page title=" { pageTitle }">
 		<content>
 			<l:Grid class="sapUiSmallMarginTop">
 
-				<Panel id = "addPanel" visible ="{addSection>/showAddSectionState}">
+				<Panel id="addPanel" visible="{addSection>/showAddSectionState}">
 					<layoutData>
 						<l:GridData span="L2 M6 S12" />
 					</layoutData>
-					<content items ="addSection>" >
+					<content items="addSection>">
 
 						<Toolbar>
 							<Title text="{addSection>/labelAddSection}" level="H2" />
 						</Toolbar>
-						
-						<Input  value="{addSection>/newEmployee/name}" id="name" placeholder="Enter new name">
+
+						<Input value="{addSection>/newEmployee/name}" id="name"
+							placeholder="Enter new name">
 							<layoutData>
 								<l:GridData span="L3 M6 S12" />
 							</layoutData>
 						</Input>
 
-						<Input value="{addSection>/newEmployee/firstName}" id="firstName" placeholder="Enter new firstName">
+						<Input value="{addSection>/newEmployee/firstName}" id="firstName"
+							placeholder="Enter new firstName">
 							<layoutData>
 								<l:GridData span="L3 M6 S12" />
 							</layoutData>
 						</Input>
 
-						<Input value="{addSection>/newEmployee/bornDate}" id="bornDate" placeholder="Enter new bornDate">
+						<Input value="{addSection>/newEmployee/bornDate}" id="bornDate"
+							placeholder="Enter new bornDate">
 							<layoutData>
 								<l:GridData span="L3 M6 S12" />
 							</layoutData>
 						</Input>
 
-						<Input value="{addSection>/newEmployee/employeeDate}" id="employeeDate" placeholder="Enter new employeeDate">
+						<Input value="{addSection>/newEmployee/employeeDate}" id="employeeDate"
+							placeholder="Enter new employeeDate">
 							<layoutData>
 								<l:GridData span="L3 M6 S12" />
 							</layoutData>
 						</Input>
 
-						<Input value="{addSection>/newEmployee/jobName}" id="jobName" placeholder="Enter new jobName">
+						<Input value="{addSection>/newEmployee/jobName}" id="jobName"
+							placeholder="Enter new jobName">
 							<layoutData>
 								<l:GridData span="L3 M6 S12" />
 							</layoutData>
 						</Input>
 
-						<Input value="{addSection>/newEmployee/managerId}" id="managerId" placeholder="Enter managerId">
+						<Input value="{addSection>/newEmployee/managerId}" id="managerId"
+							placeholder="Enter managerId">
 							<layoutData>
 								<l:GridData span="L6 M6 S12" />
 							</layoutData>
 						</Input>
 
-						<ComboBox value="{addSection>/newEmployee/brm}" id = "brm" items="{/brmArray}">
+						<ComboBox value="{addSection>/newEmployee/brm}" id="brm"
+							items="{/brmArray}">
 							<items>
 								<core:Item key="{key}" text="{text}" />
 							</items>
 						</ComboBox>
 
-						<Button text="Insert Employee" press="addNewEmployeeAddSectionButton" visible ="{addSection>/insertButtonState}">
+						<Button text="Insert Employee" press="addNewEmployeeAddSectionButton"
+							visible="{addSection>/insertButtonState}">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
 						</Button>
-						
-						<Button text="Edit Employee" press="editEmployeeAddSectionButton" visible ="{addSection>/editButtonState}">
+
+						<Button text="Edit Employee" press="editEmployeeAddSectionButton"
+							visible="{addSection>/editButtonState}">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
 						</Button>
-						
+
 						<Button text="Reset" press="resetAddSectionModel">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
 							</layoutData>
 						</Button>
-						
+
 						<Button text="Cancel" press="cancelButtonAddSection">
 							<layoutData>
 								<l:GridData span="L3 M3 S6" />
@@ -94,7 +103,7 @@
 						</Toolbar>
 					</headerToolbar>
 					<columns>
-						
+
 						<Column>
 							<Text text="Selected" />
 						</Column>
@@ -119,7 +128,7 @@
 						<Column>
 							<Text text="Functia" />
 						</Column>
-						
+
 						<Column>
 							<Text text="Manager's ID" />
 						</Column>
@@ -130,7 +139,7 @@
 					<items>
 						<ColumnListItem>
 							<cells>
-						
+
 								<CheckBox select="checkBoxState" selected="{checked}" />
 								<ObjectIdentifier title="{id}" text="{nume}" />
 								<Text text="{firstName}" />
@@ -147,30 +156,25 @@
 					</items>
 				</Table>
 				<Button text="AddEmployee" press="addEmployeeButton">
-							<layoutData>
-								<l:GridData span="L3 M3 S6" />
-							</layoutData>
+					<layoutData>
+						<l:GridData span="L3 M3 S6" />
+					</layoutData>
 				</Button>
-								
-				<Button text="Edit" press="editEmployeeSection" 
-						enabled ="{
+
+				<Button text="Edit" press="editEmployeeSection"
+					enabled="{
 							path : '/employeeArray',
 							formatter : '.checkStatus'
 						}">
-							<layoutData>
-								<l:GridData span="L3 M3 S6" />
-							</layoutData>
+					<layoutData>
+						<l:GridData span="L3 M3 S6" />
+					</layoutData>
 				</Button>
-				
-				<Button	text="Delete" press="confirmDelete">
-							<layoutData>
-								<l:GridData span="L3 M3 S6" />
-							</layoutData>	
-				</Button>
-				<Button	text="Upload" press="uploadJson" visible="false" >
-							<layoutData>
-								<l:GridData span="L3 M3 S6" />
-							</layoutData>	
+
+				<Button text="Delete" press="confirmDelete">
+					<layoutData>
+						<l:GridData span="L3 M3 S6" />
+					</layoutData>
 				</Button>
 			</l:Grid>
 		</content>

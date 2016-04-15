@@ -494,7 +494,8 @@ function(MessageBox, Controller, JSONModel) {
 				this.addSectionModel.refresh(true);
 				
 			} else {
-				console.log("Angajatul nu e valid")
+				console.log("Angajatul nu e valid");
+				 MessageBox.error("Invalid employee: name/firstName/jobName");
 			}
 		}
 
