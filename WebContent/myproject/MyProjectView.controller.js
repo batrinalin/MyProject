@@ -4,6 +4,20 @@ sap.ui.define([ 'sap/m/MessageBox', 'sap/ui/core/mvc/Controller',
 function(MessageBox, Controller, JSONModel) {
 	"use strict";
 
+	function validareString(text, list) {
+
+		  for (var i = 0; i < list.length; i++) {
+		   if (text.indexOf(list[i]) > -1) {
+		    return false;
+		   }
+		  }
+		  return true;
+		 }
+	
+	function errorMessage(mesaj) {
+			  sap.m.MessageBox.error(mesaj);
+			 }	 
+	
 	return Controller.extend("myproject.MyProjectView", {
 		/**
 		 * Called when a controller is instantiated and its View controls (if
@@ -368,7 +382,68 @@ function(MessageBox, Controller, JSONModel) {
 					.setProperty("/insertButtonState", insertButton);
 			this.addSectionModel.refresh();
 		},
+
+			 
+		validateString : function(prop, message) {
+					
+		var myString = ['*', ';', '#', '/', '!', ' ','0','1'
+				                ,'2','3','4','5','6','7','8','9' ];
+			return function (employee){
+					if( ! validareString(employee[prop],myString) ){
+						throw new Error(message);						
+						}
+					}		 
+		},
 		
+		validateDate : function(prop, message){
+			
+			 var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
+			 
+			return function (employee){
+				
+				var dt1 = new Date(employee[prop].replace(pattern, '$3-$2-$1'));
+				
+				if( dt2 == "Invalid Date"){
+					throw new Error(message);
+				}
+			}
+		},
+		
+		validateDiffrennceDate : function (prop, prop2, message, message2){
+			
+		     var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
+			 var dt = new Date(prop.replace(pattern, '$3-$2-$1'));
+			 var dt2 = new Date(prop2.replace(pattern, '$3-$2-$1'));
+			 
+			return function (){
+				
+				if
+			}
+		},
+		
+		validateEmployee : function ( employee ){
+			
+			var validName = this.validateString ("name", "Invalid Name!");
+			var validFirstName = this.validateString ("firstName", "Invalid Firstname!");
+			var validJobName = this.validateString ("jobName", "Invalid job name!");
+			var validBornDate = this.validateDate ("bornDate" , "Invalid born date!")
+			var validEmployeeDate = this.validateDate ("employeeDate" , "Invalid employeeDate!")
+			var validDiffrence = this.validateDiffrennceDate("bornDate", "employeeDate", "Employee date is no bigger!", "Diffrence is not 18!")
+			var errors=[];
+			
+			var validateArray = [validName,validFirstName,validJobName,validBornDate,validEmployeeDate];
+			
+			for (var i=0; i<validateArray.length; i++){
+				try{
+					validateArray[i](employee);
+				}catch(e){
+				      errors.push(e.message);
+				      console.trace(e);
+				      }
+			}
+			return errors;
+		},
+		/*
 		validateDate : function (date,date2){
 			
 			var message = '';
@@ -381,9 +456,9 @@ function(MessageBox, Controller, JSONModel) {
 			}
 			return message;
 		},
-
-
-		//validate name, firstName, jobName.
+*/
+/*
+		// validate name, firstName, jobName.
 		validateEmployeeStrings : function(employee) {
 
 			var employeeValidatorMessage = '';
@@ -404,33 +479,9 @@ function(MessageBox, Controller, JSONModel) {
 				}
 			}
 			
-			 /*
-			  * var checkBornDate = employee.bornDate;
-				var checkEmployeeDate = employee.employeeDate;
-			
-			 
-			 
-			 if( dt == "Invalid date" || dt2 == "Invalid date"){
-				 employeeValidator = false;
-			 }
-			 else {
-				 
-				 if(dt2.getFullYear() > dt.getFullYear()){
-					 employeeValidator = false;
-				 }
-			 var anAngajare = dt.getFullYear();
-			 var vechime = anCurent - anAngajare;
-			 return vechime;
-			 }
-			 */
-			
-			/*
-			 * id, name,firstName,bornDate,employeeDate,managerId,brm
-					jobName,pay,checked
-			 */
-
 			return employeeValidatorMessage;
 		},
+*/		
 
 		// Functia addNewEmployee adauga in array-ul de employee noul angajat.
 		addNewEmployeeAddSectionButton : function(event) {
@@ -466,6 +517,22 @@ function(MessageBox, Controller, JSONModel) {
 				checked : false
 			};
 			
+			var errors = this.validateEmployee(newEmployee);
+			//MessageBox.error(errors[0]);
+			if(errors.length > 0){
+			     errorMessage(errors.join("\n"));
+			    }
+			else {
+				
+				employees.push(newEmployee);
+				
+				this.addSectionModel.setProperty("/newEmployee", {});
+				this.modelEmployee.setProperty("/employeeArray", employees);
+				this.modelEmployee.refresh(true);
+				this.addSectionModel.refresh(true);
+			}
+			 
+			/*
 			 var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
 			 var dt = new Date(bornDate.replace(pattern, '$3-$2-$1'));
 			 var dt2 = new Date(employeeDate.replace(pattern, '$3-$2-$1'));
@@ -488,14 +555,35 @@ function(MessageBox, Controller, JSONModel) {
 
 				employees.push(newEmployee);
 
-				this.addSectionModel.setProperty("/newEmployee", {});
-				this.modelEmployee.setProperty("/employeeArray", employees);
-				this.modelEmployee.refresh(true);
-				this.addSectionModel.refresh(true);
+				
 				
 			} else {
 				console.log("Angajatul nu e valid");
 				 MessageBox.error("Invalid employee: name/firstName/jobName");
+			}
+			*/
+			
+			
+		},
+		
+		handleUploadPress: function(oEvent) {
+			var oFileUploader = this.getView().byId("fileUploader");
+			oFileUploader.upload();
+		},
+		
+		handleUploadComplete: function(oEvent) {
+			var sResponse = oEvent.getParameter("response");
+			if (sResponse) {
+				var sMsg = "";
+				var m = /^\[(\d\d\d)\]:(.*)$/.exec(sResponse);
+				if (m[1] == "200") {
+					sMsg = "Return Code: " + m[1] + "\n" + m[2], "SUCCESS", "Upload Success";
+					oEvent.getSource().setValue("");
+				} else {
+					sMsg = "Return Code: " + m[1] + "\n" + m[2], "ERROR", "Upload Error";
+				}
+ 
+				MessageToast.show(sMsg);
 			}
 		}
 
