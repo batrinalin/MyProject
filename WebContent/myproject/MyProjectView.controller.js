@@ -403,7 +403,7 @@ function(MessageBox, Controller, JSONModel) {
 				
 				var dt1 = new Date(employee[prop].replace(pattern, '$3-$2-$1'));
 				
-				if( dt2 == "Invalid Date"){
+				if( dt1 == "Invalid Date"){
 					throw new Error(message);
 				}
 			}
@@ -411,13 +411,21 @@ function(MessageBox, Controller, JSONModel) {
 		
 		validateDiffrennceDate : function (prop, prop2, message, message2){
 			
-		     var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
-			 var dt = new Date(prop.replace(pattern, '$3-$2-$1'));
-			 var dt2 = new Date(prop2.replace(pattern, '$3-$2-$1'));
-			 
-			return function (){
+			
+			return function (employee){
 				
-				if
+				 var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
+				 var dt = new Date(employee[prop].replace(pattern, '$3-$2-$1'));
+				 var dt2 = new Date(employee[prop2].replace(pattern, '$3-$2-$1'));
+				 
+				 if(dt.getFullYear() > dt2.getFullYear()){
+					 
+					 throw new Error(message);
+				 }
+				 else if (dt2.getFullYear() - dt.getFullYear() < 18){
+					 
+					 throw new Error(message2);
+				 }
 			}
 		},
 		
@@ -431,7 +439,7 @@ function(MessageBox, Controller, JSONModel) {
 			var validDiffrence = this.validateDiffrennceDate("bornDate", "employeeDate", "Employee date is no bigger!", "Diffrence is not 18!")
 			var errors=[];
 			
-			var validateArray = [validName,validFirstName,validJobName,validBornDate,validEmployeeDate];
+			var validateArray = [validName,validFirstName,validJobName,validBornDate,validEmployeeDate,validDiffrence];
 			
 			for (var i=0; i<validateArray.length; i++){
 				try{
