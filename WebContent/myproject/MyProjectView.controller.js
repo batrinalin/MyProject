@@ -451,45 +451,6 @@ function(MessageBox, Controller, JSONModel) {
 			}
 			return errors;
 		},
-		/*
-		validateDate : function (date,date2){
-			
-			var message = '';
-			
-			if ( date == "Invalid Date" ) {
-				message = "bornDate invalid";
-			}
-			else if ( date2 == "Invalid Date" ) {
-				message = "employeeDate invalid";
-			}
-			return message;
-		},
-*/
-/*
-		// validate name, firstName, jobName.
-		validateEmployeeStrings : function(employee) {
-
-			var employeeValidatorMessage = '';
-			var myString = ['*', ';', '#', '/', '!', ' ','0','1'
-			                ,'2','3','4','5','6','7','8','9' ];
-			
-			for (var i = 0; i < myString.length; i++) {
-
-				var checkName = employee.name.indexOf(myString[i]);
-				var checkFirstName = employee.firstName.indexOf(myString[i]);
-				var checkJobName = employee.jobName.indexOf(myString[i]);
-				
-				if ( checkName != -1 ) {
-					employeeValidatorMessage = "";
-				}
-				else {
-					employeeValidatorMessage = false;
-				}
-			}
-			
-			return employeeValidatorMessage;
-		},
-*/		
 
 		// Functia addNewEmployee adauga in array-ul de employee noul angajat.
 		addNewEmployeeAddSectionButton : function(event) {
@@ -526,7 +487,7 @@ function(MessageBox, Controller, JSONModel) {
 			};
 			
 			var errors = this.validateEmployee(newEmployee);
-			//MessageBox.error(errors[0]);
+
 			if(errors.length > 0){
 			     errorMessage(errors.join("\n"));
 			    }
@@ -539,39 +500,6 @@ function(MessageBox, Controller, JSONModel) {
 				this.modelEmployee.refresh(true);
 				this.addSectionModel.refresh(true);
 			}
-			 
-			/*
-			 var pattern = /(\d{2})\.(\d{2})\.(\d{4})/;
-			 var dt = new Date(bornDate.replace(pattern, '$3-$2-$1'));
-			 var dt2 = new Date(employeeDate.replace(pattern, '$3-$2-$1'));
-			 var message = this.validateDate(dt,dt2)
-			 
-			 employeeValidator = this.validateEmployeeStrings(newEmployee);
-			 
-			 if (employeeValidator != false) {
-			 
-				 if( message !='' ){
-				 
-				 MessageBox.error(message);
-				 } else {
-				 
-				 if( dt.getFullYear() > dt2.getFullYear()) {
-					 
-					 MessageBox.error("Born date is bigger then employee date");
-				 }
-			 	}
-
-				employees.push(newEmployee);
-
-				
-				
-			} else {
-				console.log("Angajatul nu e valid");
-				 MessageBox.error("Invalid employee: name/firstName/jobName");
-			}
-			*/
-			
-			
 		},
 		
 		handleUploadPress: function(oEvent) {
