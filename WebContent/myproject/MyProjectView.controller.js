@@ -80,7 +80,6 @@ function(MessageBox, Controller, JSONModel, EmployeeDAO) {
 			this.modelEmployee.setProperty("/employeeArray", this.employeeDAO.getAll());
 			
 			this.getView().setModel(this.modelEmployee) // first model added to
-			// View model added to View
 			this.getView().setModel(this.addSectionModel, "addSection") // second
 			this.getView().setModel(this.oModel, "oModelData") // third
 			
@@ -275,7 +274,8 @@ function(MessageBox, Controller, JSONModel, EmployeeDAO) {
 			var brm = this.addSectionModel.getProperty("/newEmployee/brm");
 			var pay = this.calculatePay(brm);
 
-			var employees = this.modelEmployee.getProperty("/employeeArray");
+			//var employees = this.modelEmployee.getProperty("/employeeArray");
+			var employees = this.employeeDAO.getAll();
 
 			for (i = 0; i < employees.length; i++) {
 				if (employees[i].id == id) {
@@ -292,7 +292,7 @@ function(MessageBox, Controller, JSONModel, EmployeeDAO) {
 
 			}
 			// console.log(employees[i].id);
-
+			this.employeeDAO.replaceEmployee(employees);
 			// Read: map, filter, reduce
 			this.addSectionModel.setProperty("/newEmployee", {});
 			this.addSectionModel.refresh();
@@ -466,8 +466,9 @@ function(MessageBox, Controller, JSONModel, EmployeeDAO) {
 			    }
 			else {
 				
-				employees.push(newEmployee);
 				
+				this.employeeDAO.add(newEmployee)
+				this.modelEmployee.setProperty("/employeeArray", this.employeeDAO.getAll());
 				this.addSectionModel.setProperty("/newEmployee", {});
 				this.modelEmployee.setProperty("/employeeArray", employees);
 				this.modelEmployee.refresh(true);

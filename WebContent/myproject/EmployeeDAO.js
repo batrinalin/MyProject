@@ -50,6 +50,10 @@ sap.ui.define([],function () {
 		this.employee.push(employee);
 	};
 	
+	EmployeeDAO.prototype.replaceEmployee = function(employeeReplace) {
+		this.employee = employeeReplace;
+	};
+	
 	EmployeeDAO.prototype.deleteEmployees = function(employees) {
 		this.deletedEmployee = this.deletedEmployee.concat(employees);
 		this.employee = this.employee.filter( function(empl) {
