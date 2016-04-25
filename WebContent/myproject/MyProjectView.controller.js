@@ -1,7 +1,9 @@
-sap.ui.define([ 'sap/m/MessageBox', 'sap/ui/core/mvc/Controller',
-		"sap/ui/model/json/JSONModel" ],
+sap.ui.define([ 'sap/m/MessageBox', 
+                'sap/ui/core/mvc/Controller',
+                'sap/ui/model/json/JSONModel',
+                'myproject/EmployeeDAO'],
 
-function(MessageBox, Controller, JSONModel) {
+function(MessageBox, Controller, JSONModel, EmployeeDAO) {
 	"use strict";
 
 	function validareString(text, list) {
@@ -71,46 +73,17 @@ function(MessageBox, Controller, JSONModel) {
 					text : "Manager"
 				} ],
 
-				employeeArray : [ {
-					id : "001",
-					name : "Popescu",
-					firstName : "Ioan",
-					bornDate : "10-08-1990",
-					employeeDate : "22-09-2005",
-					managerId : "007",
-					brm : "Full-Time",
-					jobName : "Portar",
-					pay : "3450",
-					checked : false
-				}, {
-					id : "007",
-					name : "Mauro",
-					firstName : "Schifano",
-					bornDate : "10-08-1982",
-					employeeDate : "22-09-1997",
-					managerId : "101",
-					brm : "Full-Time",
-					jobName : "Sef vanzari",
-					pay : "7240",
-					checked : false
-				}, {
-					id : "120",
-					name : "Bulc",
-					firstName : "Sergiu",
-					bornDate : "10-08-1982",
-					employeeDate : "22-09-1997",
-					managerId : "101",
-					brm : "Full-Time",
-					jobName : "Lucrator Magazie",
-					pay : "2240",
-					checked : false
-				} ]
+				employeeArray : [  ]
 			});
 
+			this.employeeDAO = new EmployeeDAO();
+			this.modelEmployee.setProperty("/employeeArray", this.employeeDAO.getAll());
+			
 			this.getView().setModel(this.modelEmployee) // first model added to
 			// View model added to View
 			this.getView().setModel(this.addSectionModel, "addSection") // second
 			this.getView().setModel(this.oModel, "oModelData") // third
+			
 		},
 
 		uploadJson : function() {

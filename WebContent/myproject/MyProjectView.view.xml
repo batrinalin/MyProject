@@ -177,9 +177,10 @@
 						<l:GridData span="L3 M3 S6" />
 					</layoutData>
 				</Button>
-				<u:FileUploader id="fileUploader" name="myFileUpload" uploadUrl="upload/" width="400px"
+				<u:FileUploader visible="false" id="fileUploader" name="myFileUpload" uploadUrl="upload/" width="400px"
 			              tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete"/>
 				<Button
+					visible="false"
 					text="Upload File"
 					press="handleUploadPress"/>
 			</l:Grid>
